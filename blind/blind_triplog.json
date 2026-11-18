@@ -1,0 +1,149 @@
+{
+ "TB-49071": {
+  "carrier": "Thistledown Logistics",
+  "route": "St. Paul, MN → Fargo, ND",
+  "status": "Delivered",
+  "delivered": "10/05/2026",
+  "agreed": 1310,
+  "extras": []
+ },
+ "TB-49088": {
+  "carrier": "Thistledown Logistics",
+  "route": "Fargo, ND → Billings, MT",
+  "status": "Delivered",
+  "delivered": "10/14/2026",
+  "agreed": 2045,
+  "extras": []
+ },
+ "TB-49093": {
+  "carrier": "Thistledown Logistics",
+  "route": "St. Paul, MN → Eau Claire, WI",
+  "status": "Delivered",
+  "delivered": "10/26/2026",
+  "agreed": 760,
+  "extras": []
+ },
+ "TB-49108": {
+  "carrier": "Copperleaf Haulage",
+  "route": "Tulsa, OK → Amarillo, TX",
+  "status": "Delivered",
+  "delivered": "11/10/2026",
+  "agreed": 1420,
+  "extras": [
+   {
+    "code": "DETENTION",
+    "label": "Detention",
+    "amount": 180
+   }
+  ]
+ },
+ "TB-49236": {
+  "carrier": "Bluegander Carriers",
+  "route": "Memphis, TN → Little Rock, AR",
+  "status": "Delivered",
+  "delivered": "11/09/2026",
+  "agreed": 980,
+  "extras": [
+   {
+    "code": "LUMPER",
+    "label": "Lumper",
+    "amount": 220
+   },
+   {
+    "code": "FUEL",
+    "label": "Fuel surcharge",
+    "amount": 65
+   }
+  ]
+ },
+ "TB-49342": {
+  "carrier": "Vireo Road Freight",
+  "route": "Kansas City, MO → St. Louis, MO",
+  "status": "Delivered",
+  "delivered": "11/12/2026",
+  "agreed": 1250,
+  "extras": []
+ },
+ "TB-49371": {
+  "carrier": "Hollowpine Transfer",
+  "route": "Albany, NY → Hartford, CT",
+  "status": "Delivered",
+  "delivered": "11/09/2026",
+  "agreed": 640,
+  "extras": []
+ },
+ "TB-49377": {
+  "carrier": "Hollowpine Transfer",
+  "route": "Albany, NY → Hartford, CT",
+  "status": "Delivered",
+  "delivered": "11/12/2026",
+  "agreed": 640,
+  "extras": []
+ },
+ "TB-49402": {
+  "carrier": "Pinewhistle Transport",
+  "route": "Louisville, KY → Indianapolis, IN",
+  "status": "Delivered",
+  "delivered": "11/10/2026",
+  "agreed": 2100,
+  "extras": []
+ },
+ "TB-49517": {
+  "carrier": "Stonefinch Freight",
+  "route": "Denver, CO → Cheyenne, WY",
+  "status": "Delivered",
+  "delivered": "11/11/2026",
+  "agreed": 1675,
+  "extras": []
+ },
+ "TB-49650": {
+  "carrier": "Tallgrouse Trucking",
+  "route": "Omaha, NE → Des Moines, IA",
+  "status": "Delivered",
+  "delivered": "11/12/2026",
+  "agreed": 890,
+  "extras": []
+ },
+ "TB-49733": {
+  "carrier": "Quillfeather Transport",
+  "route": "Boise, ID → Spokane, WA",
+  "status": "Delivered",
+  "delivered": "11/13/2026",
+  "agreed": 1560,
+  "extras": [
+   {
+    "code": "LAYOVER",
+    "label": "Layover",
+    "amount": 250
+   }
+  ]
+ },
+ "TB-49819": {
+  "carrier": "Marrowstone Cartage",
+  "route": "Fresno, CA → Reno, NV",
+  "status": "Delivered",
+  "delivered": "11/10/2026",
+  "agreed": 1340,
+  "extras": [
+   {
+    "code": "LIFTGATE",
+    "label": "Liftgate",
+    "amount": 85
+   }
+  ]
+ },
+ "TB-49905": {
+  "carrier": "Saltsparrow Lines",
+  "route": "Savannah, GA → Jacksonville, FL",
+  "status": "Delivered",
+  "delivered": "11/11/2026",
+  "agreed": 1150,
+  "extras": [
+   {
+    "code": "STORAGE",
+    "label": "Storage",
+    "amount": 120
+   }
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kestrel AP invoice review (POC)</title>
+<style>
+:root{--navy:#0B1E47;--blue:#2257F2;--amber:#FFB84D;--bg:#F3F6FC;--card:#fff;--line:#D7DEEC;--mut:#55627F;--ok:#0E7A4B;--okbg:#E4F5EC;--warn:#8A5A00;--warnbg:#FFF1D6;--stop:#B3261E;--stopbg:#FCE6E4;--info:#1D3F99;--infobg:#E6EDFA}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--navy);background:var(--bg)}
+header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+header h1{font-size:18px;margin:0;font-weight:650}header .sub{color:#C6D2EA;font-size:13px}
+.tabs{display:flex;gap:4px;margin-left:auto}.tabs button,.mode button{border:1px solid #3A4F86;background:transparent;color:#DCE5F8;padding:7px 13px;border-radius:8px;font:inherit;cursor:pointer}
+.tabs button.on,.mode button.on{background:#fff;color:var(--navy);border-color:#fff;font-weight:600}.mode{display:flex;gap:4px;align-items:center}.mode span{color:#C6D2EA;font-size:12px;margin-right:4px}
+main{display:grid;grid-template-columns:240px minmax(340px,1fr) minmax(400px,1.1fr);gap:14px;padding:14px 20px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:0 0 8px;font-weight:650}h2 b{color:var(--blue);margin-right:6px}
+.inbox .it{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;margin-bottom:7px;cursor:pointer;font:inherit;color:inherit}
+.inbox .it.on{border-color:var(--blue);box-shadow:0 0 0 2px #C9D8FF}.inbox .it .s{font-weight:600;font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.inbox .it .f{color:var(--mut);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:var(--infobg);color:var(--info);margin:4px 4px 0 0}
+.chip.ok{background:var(--okbg);color:var(--ok)}.chip.warn{background:var(--warnbg);color:var(--warn)}.chip.stop{background:var(--stopbg);color:var(--stop)}.chip.done{background:var(--navy);color:#fff}
+.email{font-size:13px;white-space:pre-wrap;border-left:3px solid var(--line);padding-left:10px;margin:6px 0 10px}
+.atabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.atabs button{border:1px solid var(--line);background:#F7F9FD;border-radius:8px;padding:5px 9px;font:12px/1.2 inherit;cursor:pointer;color:var(--navy)}.atabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.doc{background:#FBFCFE;border:1px solid var(--line);border-radius:8px;padding:12px;font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;min-height:120px}
+mark{background:#FFE08A;padding:1px 0;border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;color:var(--mut);font-weight:600;font-size:12px;padding:5px 8px;border-bottom:1px solid var(--line)}td{padding:6px 8px;border-bottom:1px solid #EDF1F8;vertical-align:top}
+td.q,.q{color:var(--mut);font-size:12px}tr.bad td{background:#FFF7F6}.yes{color:var(--ok);font-weight:700}.no{color:var(--stop);font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stack>.card{margin-bottom:12px}
+.banner{border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:650;font-size:18px}
+.banner small{display:block;font-size:12.5px;font-weight:500;margin-top:2px}.banner .amt{font-size:22px;white-space:nowrap}
+.b-PAY{background:var(--okbg);color:var(--ok)}.b-PAY_LESS{background:var(--warnbg);color:var(--warn)}.b-HOLD{background:var(--infobg);color:var(--info)}.b-ESCALATE,.b-NOT_INVOICE_BANK_CHANGE,.b-HUMAN_REVIEW{background:var(--stopbg);color:var(--stop)}.b-NOT_INVOICE_INQUIRY,.b-NOT_INVOICE_OTHER{background:#ECEFF6;color:var(--navy)}
+.find{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid #EDF1F8}.find:last-child{border:0}.dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;background:var(--info)}.dot.ok{background:var(--ok)}.dot.warn{background:#D98E00}.dot.stop{background:var(--stop)}
+.cite{display:inline-block;margin:3px 6px 0 0;padding:2px 8px;border:1px solid var(--line);border-radius:6px;font-size:12px;color:var(--info);background:#F7F9FD;cursor:pointer}.cite:hover{border-color:var(--blue)}.cite.tb{color:var(--navy);cursor:default}
+.draft{background:#FBFCFE;border:1px dashed #AEBBD6;border-radius:8px;padding:10px;font-size:13px;white-space:pre-wrap;margin-top:8px}
+.btn{border:1px solid var(--navy);background:var(--navy);color:#fff;border-radius:8px;padding:8px 14px;font:600 13px inherit;cursor:pointer}.btn.alt{background:#fff;color:var(--navy)}.btn.live{background:var(--blue);border-color:var(--blue)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}select,input[type=text]{font:inherit;padding:7px 9px;border:1px solid var(--line);border-radius:8px;color:var(--navy)}input[type=text]{flex:1;min-width:160px}
+.note{color:var(--mut);font-size:12.5px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}.tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}.tile .n{font-size:24px;font-weight:700}.tile .l{font-size:12.5px;color:var(--mut)}
+.page{padding:14px 20px}.tabs a{color:#DCE5F8;font-size:13px;text-decoration:none;border:1px solid #3A4F86;padding:7px 13px;border-radius:8px}details.fold>summary{font-size:15px;color:var(--navy)}details.fold>div{margin-top:12px}details.fold .card{border:0;padding:0}
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:nowrap;overflow-x:auto}.fbox{flex:1;min-width:118px;border-radius:10px;padding:9px 10px;font-size:12.5px;line-height:1.35;background:var(--infobg)}.fbox b{display:block;font-size:13px;margin-bottom:2px}.fbox .who{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}.fbox.ai .who{color:var(--blue)}.fbox.code{background:#fff;border:1.5px solid var(--navy)}.fbox.code .who{color:var(--mut)}.fbox.person{background:var(--navy);color:#fff}.fbox.person .who{color:var(--amber)}.fbox.sys{background:#ECEFF6}.fbox.sys .who{color:var(--mut)}.farrow{align-self:center;color:var(--mut);padding:0 5px;font-size:16px}.side{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:12.5px}.side span{background:var(--stopbg);color:var(--stop);border-radius:8px;padding:5px 10px}.side span.n{background:#ECEFF6;color:var(--navy)}details{margin-top:8px}summary{cursor:pointer;color:var(--info);font-weight:600;font-size:13px}
+#status{font-size:12.5px;color:#C6D2EA}
+.sum{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-weight:650;box-shadow:0 2px 8px rgba(11,30,71,.12)}.sum small{font-weight:500;font-size:12.5px;display:block}
+.demobox{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;width:min(680px,calc(100vw - 40px));background:var(--navy);color:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 10px 30px rgba(11,30,71,.35);z-index:50}.demobox h3{margin:0 0 4px;font-size:16px}.demobox p{margin:0 0 10px;font-size:14px;color:#DCE5F8}.demobox .n{color:var(--amber);font-size:12px;font-weight:650;letter-spacing:.06em;text-transform:uppercase}.demobox .row{justify-content:space-between}.demobox button{border:1px solid #5871B5;background:transparent;color:#fff;border-radius:8px;padding:6px 14px;font:600 13px inherit;cursor:pointer}.demobox button.p{background:var(--amber);color:var(--navy);border-color:var(--amber)}
+.runs span{display:inline-block;min-width:18px;text-align:center}.hide{display:none!important}
+@media(max-width:1100px){main{grid-template-columns:1fr}.tiles{grid-template-columns:repeat(2,1fr)}}
+</style></head><body>
+<header>
+ <div><h1>Kestrel AP · carrier invoice review <span class="sub">POC</span></h1><div class="sub">AI reads the email and documents · code compares against TripLog · Elena decides</div></div>
+ <div class="mode"><button id="demoBtn" style="background:#FFB84D;color:#0B1E47;border-color:#FFB84D;font-weight:650">▶ Start demo</button><span style="margin-left:10px">Read by</span><button id="mRec">Recorded AI run</button><button id="mLive">Live AI</button><button id="mRef">Stand-in</button><span id="status"></span></div>
+ <div class="tabs"><a href="#evals">Evidence ↓</a></div>
+</header>
+<section class="page" id="arch" style="padding-bottom:0"></section>
+<main id="review">
+ <section class="card inbox"><h2>Shared inbox</h2><div class="atabs" id="setTabs"></div><div id="inbox"></div><div class="note" id="queueNote"></div></section>
+ <section class="stack"><div class="card"><h2><b>1</b>Inbox item and attachments</h2><div id="mail"></div></div><div id="mid" class="stack"></div></section>
+ <section class="stack" id="panel"></section>
+</main>
+<div class="page" id="evals"></div>
+<div class="page" id="more"><details class="card fold"><summary>What is real, mocked and not built</summary><div id="real"></div></details><details class="card fold" style="margin-top:12px"><summary>One-page spec and path to production</summary><div id="spec"></div></details></div>
+<div id="demoBox" class="demobox hide"></div>
+<script>/*EXPECTED*/</script>
+<script>/*DATA*/</script>
+<script>/*ENGINE*/</script>
+<script>/*UI*/</script>
+</body></html>
